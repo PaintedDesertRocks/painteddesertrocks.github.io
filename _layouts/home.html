@@ -19,7 +19,7 @@
 
           <style>
               /* Mobile first: default is mobile */
-              header.major {
+              #homeSpacing {
                 margin-top: 20vh; /* mobile */
               }
               header.major.h1 {
@@ -39,7 +39,7 @@
 
               /* Big screens */
               @media (min-width: 768px) {
-                header.major {
+                #homeSpacing {
                   margin-top: 40vh; /* big screen */
                 }
                 header.major.h1 {
@@ -59,7 +59,7 @@
               }
         </style>
 
-            <header class="major">
+            <header class="major" id="homeSpacing">
 
               <h1>
 
@@ -70,9 +70,8 @@
   <div class="content"
        style="
          text-align:center;
-         margin:0;
-         padding:0;
          justify-content: center !important; /* horizontal alignment */
+         margin: 0 0 0 0;
        ">
 
     <div class="social-links">
