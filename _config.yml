@@ -12,6 +12,7 @@ state: OÖ
 zip_code:
 country: Austria
 phone:
+Formspree: movrezqa
 
 # homepage tiles
 tiles-source: pages # accepts "posts" or "pages"
@@ -23,10 +24,10 @@ tiles-count: 6
 # You need to restart jekyll for changes to have an effect
 socials:
   GitHub: https://github.com/painteddesertrocks
-  GitLab:
-  Google-Plus:
-  Instagram:
-  LinkedIn:
+  GitLab:  painteddesertrocks
+  Google-Plus: painteddesertrocks
+  Instagram: painteddesertrocks
+  LinkedIn: painteddesertrocks
   Twitter:
   Facebook:
   Slack:
