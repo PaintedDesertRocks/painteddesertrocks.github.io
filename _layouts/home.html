@@ -16,7 +16,23 @@
 
     <section id="banner" class="major">
         <div class="inner">
-            <header class="major" style="margin-top: 40vh;">
+
+          <style>
+              /* Mobile first: default is mobile */
+              header.major {
+                margin-top: 20vh; /* mobile */
+              }
+
+              /* Big screens */
+              @media (min-width: 768px) {
+                header.major {
+                  margin-top: 40vh; /* big screen */
+                }
+              }
+        </style>
+
+            <header class="major">
+
               <h1 style="margin:0; padding:0; text-align:center;">
 
   <img src="{{ site.baseurl }}/assets/images/WebsiteSchriftzugLogo.png"
