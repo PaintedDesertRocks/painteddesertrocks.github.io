@@ -22,18 +22,46 @@
               header.major {
                 margin-top: 20vh; /* mobile */
               }
+              header.major.h1 {
+                margin:0;
+                padding:0;
+                text-align:center;
+              }
+              social-links {
+                padding-left: 50%;
+                padding-right: 50%;
+                margin-left: 50%;
+                margin-right: 50%;
+                justify-content: center;
+                box-sizing: border-box; /* ensures padding doesn’t break layout */
+                text-align: center;
+              }
 
               /* Big screens */
               @media (min-width: 768px) {
                 header.major {
                   margin-top: 40vh; /* big screen */
                 }
+                header.major.h1 {
+                  margin:0;
+                  padding:0;
+                  text-align:center;
+                }
+                social-links {
+                  padding-left: 50%;
+                  padding-right: 50%;
+                  margin-left: 50%;
+                  margin-right: 50%;
+                  box-sizing: border-box; /* ensures padding doesn’t break layout */
+                  text-align: center;
+                  justify-content: center;
+                }
               }
         </style>
 
             <header class="major">
 
-              <h1 style="margin:0; padding:0; text-align:center;">
+              <h1>
 
   <img src="{{ site.baseurl }}/assets/images/WebsiteSchriftzugLogo.png"
        alt=""
@@ -44,7 +72,7 @@
          text-align:center;
          margin:0;
          padding:0;
-         justify-content: center; /* horizontal alignment */
+         justify-content: center !important; /* horizontal alignment */
        ">
 
     <div class="social-links">
