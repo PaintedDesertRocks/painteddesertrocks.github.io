@@ -25,12 +25,12 @@ socials:
   GitHub: https://github.com/painteddesertrocks
   GitLab:
   Google-Plus:
-  Instagram: rock_with_painted_desert
+  Instagram:
   LinkedIn:
   Twitter:
   Facebook:
   Slack:
-  Youtube:
+
 
 # build settings
 markdown: kramdown
