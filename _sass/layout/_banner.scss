@@ -90,17 +90,20 @@
 					font-weight: _font(weight-bold);
 					letter-spacing: _font(letter-spacing-alt);
 					text-transform: uppercase;
+					text-align: center;   /* ← add this */
 				}
 			}
 		}
 
 		&.major {
-			height: 75vh;
-			min-height: 30em;
-			max-height: 50em;
+
+			text-align: center;   /* ← add this */
+			height: 100vh;
+			min-height: 100vh;
+
 
 			&.alt {
-				  opacity: 0.75;
+				  opacity: 0.50;
 			}
 		}
 

@@ -9,9 +9,9 @@ author:
 street_address:
 city: Steyr
 state: OÖ
-zip_code: 55555
+zip_code:
 country: Austria
-phone: (716) 555-5555
+phone:
 
 # homepage tiles
 tiles-source: pages # accepts "posts" or "pages"
@@ -25,11 +25,12 @@ socials:
   GitHub: https://github.com/painteddesertrocks
   GitLab:
   Google-Plus:
-  Instagram:
+  Instagram: rock_with_painted_desert
   LinkedIn:
   Twitter:
   Facebook:
   Slack:
+  Youtube:
 
 # build settings
 markdown: kramdown
