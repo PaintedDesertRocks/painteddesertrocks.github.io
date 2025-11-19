@@ -78,3 +78,40 @@
 	@import 'layout/footer';
 	@import 'layout/wrapper';
 	@import 'layout/menu';
+
+	.social-links {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.social-links a {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;       /* removes dotted underline */
+  color: #ffffff;              /* default icon color */
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.social-links a svg {
+  width: 26px;
+  height: 26px;
+  fill: currentColor;          /* icon inherits link color */
+}
+
+.social-links a:hover {
+  transform: scale(1.2);       /* zoom effect */
+  color: #ff6600;              /* hover color (change as you like) */
+}
+
+.social-links a {
+  outline: none;                  /* remove focus outline */
+}
+
+.social-links a:focus {
+  outline: none !important;       /* some browsers need this */
+  box-shadow: none !important;    /* removes Firefox dotted line */
+}
