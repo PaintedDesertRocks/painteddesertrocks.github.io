@@ -63,27 +63,91 @@
 
               <h1>
 
-<div class="content"
-       style="
-         text-align:center;
-         justify-content: center !important; /* horizontal alignment */
-         margin: 0 0 0 0;
-		text-transform: uppercase;"
-		font-size: clamp(2rem, 2vw, 3rem) !important;
->
-		<div class="row" style="padding: 0 0 0 1em;">
-			<p>02.06.2026 Planett Festival Tour SZENE Wien</p>
-		</div>
-		<div class="row" style="padding: 0 0 0 1em;">
-			<p>20.03.2026 LUCIA Metro Fest Wien</p>
-		</div>
-		<div class="row" style="padding: 0 0 0 1em;">
-			<p>21.03.2026 Zacky Waldviertel</p>
-		</div>
-		<div class="row" style="padding: 0 0 0 1em;">
-			<p>25.04.2026 Noppen Air Festival Mühlviertal</p>
-		</div>
+<style>
+.event-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    text-transform: uppercase; 
+    font-size: clamp(1.6rem, 2vw, 2.6rem);
+    font-weight: 400 !important;
+}
+
+/* Responsive spacing */
+.event-item {
+    padding: 0.3em 1em;
+}
+
+/* Link styling */
+.event-item a {
+    text-decoration: none;
+    color: inherit; /* use the same text color */
+    position: relative;
+    transition: color 0.3s ease;
+    display: inline-block;
+}
+
+/* Soft underline animation */
+.event-item a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    opacity: 0.5;
+}
+
+/* Hover effect */
+.event-item a:hover::after {
+    transform: scaleX(1);
+}
+
+/* Slight brightness on hover */
+.event-item a:hover {
+    filter: brightness(1.3);
+}
+
+/* Optional: more compact spacing on very small screens */
+@media (max-width: 480px) {
+    .event-item { padding: 0.2em 0.5em; }
+}
+</style>
+
+<div class="event-list">
+
+    <div class="event-item">
+        <a href="https://www.planetfestivaltour.at/" target="_blank">
+            02.06.2026 Planett Festival Tour SZENE Wien
+        </a>
+    </div>
+
+    <div class="event-item">
+        <a href="https://www.clublucia.at/de/" target="_blank">
+            20.03.2026 Lucia Metro Fest Wien
+        </a>
+    </div>
+
+    <div class="event-item">
+        <a href="http://www.zacky.at/veranstaltungen/" target="_blank">
+            21.03.2026 Zacky Waldviertel
+        </a>
+    </div>
+
+    <div class="event-item">
+        <a href="https://www.noppenair.at/" target="_blank">
+            25.04.2026 Noppen Air Festival Mühlviertel
+        </a>
+    </div>
+
 </div>
+
 
 	  
 
