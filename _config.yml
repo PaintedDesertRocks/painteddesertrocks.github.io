@@ -3,8 +3,8 @@ title: Painted Desert
 subtitle: Rocks
 email: desertpainted@gmail.com
 description: We pray to the old and new gods of Rock and Metal. In their realm there is no best and no worst; there is only Music. We are mere acolytes, sharing our stories so they may live on through our listeners, carrying forward the eternal urge to rock.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: # the base hostname & protocol for your site
+url: "https://painteddesertrocks.github.io"
+baseurl: ""     # keep empty for root
 author:
 street_address:
 city: Steyr
@@ -39,7 +39,13 @@ sass:
   style: compressed
 
 exclude:
-- "*.gemspec"
-- LICENSE.md
-- CONTRIBUTING.md
-- README.md
+  - "*.gemspec"
+  - LICENSE.md
+  - CONTRIBUTING.md
+  - README.md
+  - node_modules
+  - vendor
+  - .github
+  - Gemfile
+  - Gemfile.lock
+
