@@ -27,78 +27,91 @@
 <!-- Theme color -->
 <meta name="theme-color" content="#ffffff">
 
-<!-- Cookie banner -->
-<div id="cookie-banner" 
-     style="
-       position: fixed;
-       top: 0;
-       left: 0;
-       width: 100%;
-       height: 10vh;
-       background: rgba(0,0,0,0.5); 
-       color: white;
-       backdrop-filter: blur(4px);
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       gap: 12px;
-       font-size: 16px;
-       z-index: 99999;
-     ">
-  This site uses cookies for analytics.
-  <button id="accept-cookies" 
-     style="background:white; color:black; padding:6px 12px; border:none; cursor:pointer;">
-    Accept
-  </button>
-  <button id="decline-cookies" 
-     style="background:white; color:black; padding:6px 12px; border:none; cursor:pointer;">
-    Decline
-  </button>
+	<style>
+  .cookie-banner {
+    position: fixed;
+    bottom: 0;   /* ⬅⬅⬅ Banner nun unten */
+    left: 0;
+    width: 100%;
+    height: 10vh;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    text-transform: uppercase;
+    font-size: 15px;
+    backdrop-filter: blur(4px);
+    z-index: 99999;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .cookie-btn {
+    background: white;
+    color: black;
+    padding: 6px 12px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+</style>
+
+<div id="cookie-banner" class="cookie-banner hidden">
+  <span class="cookie-text">This site uses cookies for analytics.</span>
+  <button id="accept-cookies" class="cookie-btn">Accept</button>
+  <button id="decline-cookies" class="cookie-btn">Decline</button>
 </div>
+
+
 	
 {% if jekyll.environment == "production" %}
 
-
-
 <script>
-  // Check if user has previously made a choice
-  const consent = localStorage.getItem("ga_consent");
+  window.addEventListener("load", () => {
+    const banner = document.getElementById("cookie-banner");
+    const acceptBtn = document.getElementById("accept-cookies");
+    const declineBtn = document.getElementById("decline-cookies");
 
-  if (consent === "accepted") {
-    loadGoogleAnalytics();
-    document.getElementById("cookie-banner").style.display = "none";
-  } else if (consent === "declined") {
-    document.getElementById("cookie-banner").style.display = "none";
-  }
+    const consent = localStorage.getItem("ga_consent");
 
-  // Accept
-  document.getElementById("accept-cookies").addEventListener("click", () => {
-    localStorage.setItem("ga_consent", "accepted");
-    loadGoogleAnalytics();
-    document.getElementById("cookie-banner").style.display = "none";
+    if (!consent) {
+      banner.classList.remove("hidden");
+    }
+
+    acceptBtn.addEventListener("click", () => {
+      localStorage.setItem("ga_consent", "accepted");
+      banner.classList.add("hidden");
+      loadGoogleAnalytics();
+    });
+
+    declineBtn.addEventListener("click", () => {
+      localStorage.setItem("ga_consent", "declined");
+      banner.classList.add("hidden");
+    });
   });
 
-  // Decline
-  document.getElementById("decline-cookies").addEventListener("click", () => {
-    localStorage.setItem("ga_consent", "declined");
-    document.getElementById("cookie-banner").style.display = "none";
-  });
-
-  // Function to load GA4 only after consent
   function loadGoogleAnalytics() {
-    // GA tag
     let gtagScript = document.createElement("script");
-    gtagScript.setAttribute("async", "");
-    gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-TVT3CTW8LL""; // <-- replace with your GA ID
+    gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-TVT3CTW8LL";
+    gtagScript.async = true;
     document.head.appendChild(gtagScript);
 
-    // GA config
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag("js", new Date());
-    gtag('config', 'G-TVT3CTW8LL');
+    gtag("config", 'G-TVT3CTW8LL');
   }
+	
 </script>
+
+
+
 	
 {% endif %}
 
