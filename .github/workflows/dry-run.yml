@@ -1,14 +1,19 @@
-name: Deploy to GitHub Pages
+name: Dry-run Jekyll build
 
 on:
   pull_request:
     branches:
-      - master
+      - main   # change to 'master' if your default branch is actually master
 
 jobs:
   github-pages:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: helaili/jekyll-action@2.0.5
-        build_only: true
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Jekyll dry-run build
+        uses: helaili/jekyll-action@2.0.5
+        with:
+          build_only: true
