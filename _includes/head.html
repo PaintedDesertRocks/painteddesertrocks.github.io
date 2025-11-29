@@ -27,17 +27,58 @@
 <!-- Theme color -->
 <meta name="theme-color" content="#ffffff">
 
+<!-- Example cookie banner -->
+<div id="cookie-banner" style="padding: 15px; background:#eee; position:fixed; bottom:0; width:100%; text-align:center;">
+  This site uses cookies for analytics. 
+  <button id="accept-cookies">Accept</button>
+  <button id="decline-cookies">Decline</button>
+</div>
+	
 {% if jekyll.environment == "production" %}
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TVT3CTW8LL"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-TVT3CTW8LL');
+
+
+<script>
+  // Check if user has previously made a choice
+  const consent = localStorage.getItem("ga_consent");
+
+  if (consent === "accepted") {
+    loadGoogleAnalytics();
+    document.getElementById("cookie-banner").style.display = "none";
+  } else if (consent === "declined") {
+    document.getElementById("cookie-banner").style.display = "none";
+  }
+
+  // Accept
+  document.getElementById("accept-cookies").addEventListener("click", () => {
+    localStorage.setItem("ga_consent", "accepted");
+    loadGoogleAnalytics();
+    document.getElementById("cookie-banner").style.display = "none";
+  });
+
+  // Decline
+  document.getElementById("decline-cookies").addEventListener("click", () => {
+    localStorage.setItem("ga_consent", "declined");
+    document.getElementById("cookie-banner").style.display = "none";
+  });
+
+  // Function to load GA4 only after consent
+  function loadGoogleAnalytics() {
+    // GA tag
+    let gtagScript = document.createElement("script");
+    gtagScript.setAttribute("async", "");
+    gtagScript.src = "https://www.googletagmanager.com/gtag/js?id=G-TVT3CTW8LL""; // <-- replace with your GA ID
+    document.head.appendChild(gtagScript);
+
+    // GA config
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag('config', 'G-TVT3CTW8LL');
+  }
 </script>
 	
 {% endif %}
+
 
 </head>
