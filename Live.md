@@ -19,9 +19,9 @@ nav-menu: true
 <div class="row">
 	<div class="6u 12u$(medium)" style="font-weight: bold">
 		<p>06.02.2026 Planett Festival Tour SZENE Wien</p>
-		<p>20.03.2026 LUCIA Metro Fest Wien</p>
 		<p>21.03.2026 Zacky Waldviertel</p>
 		<p>25.04.2026 Noppen Air Festival Mühlviertal</p>
+		<p>03.06.2026 EP Release Party Röda Steyr</p>
 	</div>
 </div>
 
