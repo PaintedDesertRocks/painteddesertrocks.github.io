@@ -18,8 +18,13 @@ nav-menu: true
 
 <div class="row">
 	<div class="6u 12u$(medium)" style="font-weight: bold">
-		<p>25.04.2026 Noppen Air Festival Mühlviertal</p>
-		<p>03.06.2026 EP Release Party Röda Steyr</p>
+		    <div class="event-item">
+        <a href="https://www.jazzatelier.at/paintetdesert/" target="_blank">
+            26.06.2026 Kaleido-Hacklerfest in Ulrichsberg, AK 15€
+        </a>
+    </div>
+
+
 	</div>
 </div>
 
@@ -27,8 +32,10 @@ nav-menu: true
 
 <div class="row">
 	<div class="6u 12u$(small)">
+		<p>25.04.2026 Noppen Air Festival Mühlviertal</p>
+		<p>03.06.2026 EP Release Party Röda Steyr</p>
 		<p>18.10.2025 Planett Festival Tour - KIK Ried</p>
-<p>06.02.2026 Planett Festival Tour SZENE Wien</p>
+		<p>06.02.2026 Planett Festival Tour SZENE Wien</p>
 		<p>21.03.2026 Zacky Waldviertel</p>
 	</div>
 </div>
