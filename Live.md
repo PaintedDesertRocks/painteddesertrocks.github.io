@@ -18,14 +18,8 @@ nav-menu: true
 
 <div class="row">
 	<div class="6u 12u$(medium)" style="font-weight: bold">
-		    <div class="event-item">
-        <a href="https://www.jazzatelier.at/paintetdesert/" target="_blank">
-            26.06.2026 Kaleido-Hacklerfest in Ulrichsberg, AK 15€
-        </a>
+        <a href="https://www.jazzatelier.at/paintetdesert/" target="_blank">26.06.2026 Kaleido-Hacklerfest in Ulrichsberg, AK 15€</a>
     </div>
-
-
-	</div>
 </div>
 
 <h2 id="content">Past</h2>
