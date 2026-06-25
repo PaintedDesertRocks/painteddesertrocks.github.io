@@ -2,7 +2,7 @@
 layout: page
 title: Live
 image: assets/images/pic01.jpg
-description: 'the past, the future and the present'
+description: 'The past, the future and the present'
 nav-menu: true
 ---
 

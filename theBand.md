@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: page
 title: the Band
 description: All about us
 image: assets/images/pic11.jpg
