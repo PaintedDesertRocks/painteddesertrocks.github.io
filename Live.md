@@ -18,18 +18,19 @@ nav-menu: true
 
 <div class="row">
 	<div class="6u 12u$(medium)" style="font-weight: bold">
-        <a href="https://www.jazzatelier.at/paintetdesert/" target="_blank">26.06.2026 Kaleido-Hacklerfest in Ulrichsberg, AK 15€</a>
+        19.09.2026 Triple Buzz with Steambreather & Ophites - location tba
     </div>
 </div>
 
-<h2 id="content">Past</h2>
+<h2 id="content">the glory past</h2>
 
 <div class="row">
 	<div class="6u 12u$(small)">
-		<p>25.04.2026 Noppen Air Festival Mühlviertal</p>
+		<p>26.06.2026 Kaleidophon-Hacklerfest im Jazzatelier Ulrichsberg</p>
 		<p>03.06.2026 EP Release Party Röda Steyr</p>
-		<p>18.10.2025 Planett Festival Tour - KIK Ried</p>
-		<p>06.02.2026 Planett Festival Tour SZENE Wien</p>
+		<p>25.04.2026 Noppen Air Festival Mühlviertal</p>
 		<p>21.03.2026 Zacky Waldviertel</p>
+		<p>06.02.2026 Planett Festival Tour SZENE Wien</p>
+		<p>18.10.2025 Planett Festival Tour - KIK Ried</p>
 	</div>
 </div>
