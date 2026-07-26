@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<!--
+    Forty by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license
+    html5up.net/license
+-->
+<html lang="en">
+
+    {% include head.html %}
+
+    <link
+        rel="icon"
+        type="image/x-icon"
+        href="{{ '/assets/images/favicon.png' | relative_url }}"
+    >
+
+    <style>
+        /* =========================================================
+           GALLERY
+           ========================================================= */
+
+        .gallery-section {
+            --gallery-gap: clamp(0.75rem, 1.5vw, 1.4rem);
+            --gallery-accent: #9bf1ff;
+
+            padding: clamp(3rem, 7vw, 6rem) 0;
+        }
+
+        .gallery-container {
+            width: min(92%, 1400px);
+            margin: 0 auto;
+        }
+
+        .gallery-heading {
+            max-width: 700px;
+            margin: 0 auto clamp(2rem, 5vw, 4rem);
+            text-align: center;
+        }
+
+        .gallery-heading h2 {
+            margin-bottom: 0.75rem;
+            font-size: clamp(2rem, 5vw, 4rem);
+            line-height: 1.1;
+        }
+
+        .gallery-heading p {
+            margin: 0;
+            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+            line-height: 1.7;
+            opacity: 0.75;
+        }
+
+        /*
+         * Four images per row.
+         */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: var(--gallery-gap);
+        }
+
+        /*
+         * Reset the button styles inherited from Forty.
+         */
+         /* Override all inherited HTML5 UP button dimensions */
+     button.gallery-item {
+         position: relative;
+         display: block;
+
+         width: 100%;
+         height: auto;
+         min-width: 0;
+         min-height: 0;
+
+         padding: 0;
+         margin: 0;
+         overflow: hidden;
+
+         appearance: none;
+         -webkit-appearance: none;
+
+         background: #15171d;
+         border: 0;
+         border-radius: 0.3rem;
+         box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.2);
+
+         cursor: zoom-in;
+         font-size: inherit;
+         letter-spacing: normal;
+         line-height: normal;
+         text-align: left;
+         text-transform: none;
+         white-space: normal;
+
+         transition:
+             transform 180ms ease,
+             box-shadow 180ms ease;
+     }
+
+     /* Controls the thumbnail shape */
+     .gallery-item-image {
+         position: relative;
+         display: block;
+
+         width: 100%;
+         height: auto;
+         aspect-ratio: 4 / 3;
+
+         overflow: hidden;
+     }
+
+     /* Makes the image fill the thumbnail */
+     .gallery-item img {
+         position: absolute;
+         inset: 0;
+
+         display: block;
+         width: 100%;
+         height: 100%;
+
+         object-fit: cover;
+         object-position: center;
+
+         transition:
+             transform 250ms ease,
+             filter 250ms ease;
+     }
+        .gallery-item-overlay {
+            height: 100%;
+            position: absolute;
+            inset: 0;
+
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 1rem;
+
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 0.72),
+                    transparent 55%
+                );
+
+            opacity: 0;
+            transition: opacity 200ms ease;
+        }
+
+        /* .gallery-item-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 2.2rem;
+            padding: 0.35rem 0.9rem;
+
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 999px;
+
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            line-height: 1;
+            text-transform: uppercase;
+
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+        } */
+
+        /*
+         * Tiny hover enlargement.
+         */
+        @media (hover: hover) and (pointer: fine) {
+            button.gallery-item:hover {
+                z-index: 2;
+                transform: translateY(-3px) scale(1.018);
+                box-shadow: 0 1.2rem 2.8rem rgba(0, 0, 0, 0.4);
+            }
+
+            .gallery-item:hover img {
+                transform: scale(1.035);
+                filter: brightness(0.82);
+            }
+
+            .gallery-item:hover .gallery-item-overlay {
+                opacity: 1;
+            }
+        }
+
+        .gallery-item:focus-visible {
+            z-index: 3;
+            outline: 3px solid var(--gallery-accent);
+            outline-offset: 4px;
+        }
+
+        .gallery-item:focus-visible .gallery-item-overlay {
+            opacity: 1;
+        }
+
+        .gallery-empty {
+            grid-column: 1 / -1;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        /* =========================================================
+           FULL-SCREEN LIGHTBOX
+           ========================================================= */
+
+        body.gallery-open {
+            overflow: hidden;
+        }
+
+        .gallery-lightbox {
+            position: fixed;
+            z-index: 10000;
+            inset: 0;
+
+            display: grid;
+            grid-template-columns: minmax(3rem, 8vw) minmax(0, 1fr) minmax(3rem, 8vw);
+            grid-template-rows: minmax(0, 1fr) auto;
+            align-items: center;
+            justify-items: center;
+
+            padding:
+                max(1rem, env(safe-area-inset-top))
+                max(0.5rem, env(safe-area-inset-right))
+                max(1rem, env(safe-area-inset-bottom))
+                max(0.5rem, env(safe-area-inset-left));
+
+            background: rgba(4, 5, 8, 0.96);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition:
+                opacity 200ms ease,
+                visibility 200ms ease;
+        }
+
+        .gallery-lightbox[hidden] {
+            display: none;
+        }
+
+        .gallery-lightbox.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .gallery-lightbox-figure {
+            grid-column: 2;
+            grid-row: 1;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+            height: 100%;
+            min-width: 0;
+            margin: 0;
+        }
+
+        .gallery-lightbox-image {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: calc(100vh - 8rem);
+
+            object-fit: contain;
+
+            border-radius: 0.25rem;
+            box-shadow: 0 1.5rem 5rem rgba(0, 0, 0, 0.7);
+
+            opacity: 0;
+            transform: scale(0.97);
+
+            transition:
+                opacity 220ms ease,
+                transform 220ms ease;
+        }
+
+        .gallery-lightbox.is-open .gallery-lightbox-image {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* .gallery-lightbox-caption {
+            margin-top: 0.8rem;
+
+            color: rgba(255, 255, 255, 0.75);
+
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            line-height: 1.4;
+            text-align: center;
+            text-transform: uppercase;
+        } */
+
+        button.gallery-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: clamp(2.8rem, 5vw, 4.2rem);
+            height: clamp(2.8rem, 5vw, 4.2rem);
+            padding: 0;
+
+            appearance: none;
+            -webkit-appearance: none;
+
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: clamp(1.7rem, 4vw, 2.8rem);
+            font-weight: 300;
+            line-height: 1;
+
+            transition:
+                background 180ms ease,
+                border-color 180ms ease,
+                transform 180ms ease;
+        }
+
+        button.gallery-control:hover {
+            background: rgba(255, 255, 255, 0.17);
+            border-color: rgba(255, 255, 255, 0.75);
+            transform: scale(1.06);
+        }
+
+        button.gallery-control:focus-visible {
+            outline: 3px solid var(--gallery-accent);
+            outline-offset: 4px;
+        }
+
+        .gallery-previous {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .gallery-next {
+            grid-column: 3;
+            grid-row: 1;
+        }
+
+        button.gallery-close {
+            position: absolute;
+            top: max(1rem, env(safe-area-inset-top));
+            right: max(1rem, env(safe-area-inset-right));
+            z-index: 2;
+
+            width: 3rem;
+            height: 3rem;
+            font-size: 2rem;
+        }
+
+        .gallery-counter {
+            grid-column: 1 / -1;
+            grid-row: 2;
+
+            color: rgba(255, 255, 255, 0.7);
+
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        /* =========================================================
+           RESPONSIVE LAYOUT
+           ========================================================= */
+
+        @media screen and (max-width: 900px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .gallery-section {
+                padding: 2.5rem 0;
+            }
+
+            .gallery-container {
+                width: min(90%, 32rem);
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .gallery-lightbox {
+                grid-template-columns: 3.2rem minmax(0, 1fr) 3.2rem;
+            }
+
+            .gallery-lightbox-image {
+                max-height: calc(100vh - 10rem);
+            }
+
+            button.gallery-control {
+                width: 2.7rem;
+                height: 2.7rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .gallery-item,
+            .gallery-item img,
+            .gallery-item-overlay,
+            .gallery-lightbox,
+            .gallery-lightbox-image,
+            .gallery-control {
+                transition: none !important;
+            }
+
+            button.gallery-item:hover {
+                transform: none;
+            }
+        }
+    </style>
+
+    <body>
+
+        {% include header.html %}
+
+        <!-- Banner -->
+        <section id="banner" class="style2">
+            <div class="inner">
+
+                <span class="image">
+                    <img
+                        src="{{ page.image | relative_url }}"
+                        alt=""
+                    >
+                </span>
+
+                <header class="major">
+                    <h1>{{ page.title }}</h1>
+                </header>
+
+                <div class="content">
+                    {{ page.description }}
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Main content -->
+        <main id="main">
+
+            <section
+                class="gallery-section"
+                aria-labelledby="gallery-title"
+            >
+                <div class="gallery-container">
+
+                    <header class="gallery-heading">
+                        <p>
+                            A collection of moments from Painted Desert.
+                            Select an image to view it full screen.
+                        </p>
+                    </header>
+
+                    {{ content }}
+
+                    <!--
+                        Find every PNG inside:
+                        /assets/images/gallery/
+
+                        Images are sorted by filename:
+                        img01.png, img02.png, img03.png, etc.
+                    -->
+                    {% assign gallery_images = site.static_files | where_exp: "image", "image.path contains '/assets/images/gallery/' and image.extname == '.jpg'" | sort: "name" %}
+
+                    <div
+                        class="gallery-grid"
+                        id="gallery-grid"
+                    >
+
+                        {% for image in gallery_images %}
+
+                            {% assign image_number = image.basename | remove: 'img' %}
+
+                            <button
+                                class="gallery-item"
+                                type="button"
+                                data-gallery-index="{{ forloop.index0 }}"
+                                data-full-image="{{ image.path | relative_url }}"
+                                data-caption="Painted Desert — Image {{ image_number }}"
+                                aria-label="Open gallery image {{ forloop.index }} of {{ gallery_images.size }}"
+                            >
+                                <span class="gallery-item-image">
+
+                                    <img
+                                        src="{{ image.path | relative_url }}"
+                                        alt="Painted Desert gallery image {{ image_number }}"
+                                        loading="lazy"
+                                        decoding="async"
+                                    >
+
+                                    <span
+                                        class="gallery-item-overlay"
+                                        aria-hidden="true"
+                                    >
+                                        <span class="gallery-item-label">
+
+                                        </span>
+                                    </span>
+
+                                </span>
+                            </button>
+
+                        {% else %}
+
+                            <p class="gallery-empty">
+                                No gallery images were found in
+                                <code>assets/images/gallery/</code>.
+                            </p>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Full-screen lightbox -->
+        <div
+            class="gallery-lightbox"
+            id="gallery-lightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Full-screen image viewer"
+            hidden
+        >
+            <button
+                class="gallery-control gallery-close neonText"
+                id="gallery-close"
+                type="button"
+                aria-label="Close full-screen image"
+            >
+                &times;
+            </button>
+
+            <button
+                class="gallery-control gallery-previous neonText"
+                id="gallery-previous"
+                type="button"
+                aria-label="View previous image"
+            >
+                &#8249;
+            </button>
+
+            <figure class="gallery-lightbox-figure">
+
+                <img
+                    class="gallery-lightbox-image"
+                    id="gallery-lightbox-image"
+                    src=""
+                    alt=""
+                >
+
+            </figure>
+
+            <button
+                class="gallery-control gallery-next neonText"
+                id="gallery-next"
+                type="button"
+                aria-label="View next image"
+            >
+                &#8250;
+            </button>
+
+            <div
+                class="gallery-counter"
+                id="gallery-counter"
+                aria-live="polite"
+            ></div>
+        </div>
+
+        {% include footer.html %}
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                "use strict";
+
+                const galleryItems = Array.from(
+                    document.querySelectorAll(".gallery-item")
+                );
+
+                const lightbox = document.getElementById("gallery-lightbox");
+                const lightboxImage = document.getElementById(
+                    "gallery-lightbox-image"
+                );
+
+                const counter = document.getElementById("gallery-counter");
+                const closeButton = document.getElementById("gallery-close");
+                const previousButton = document.getElementById(
+                    "gallery-previous"
+                );
+                const nextButton = document.getElementById("gallery-next");
+
+                let currentIndex = 0;
+                let previouslyFocusedElement = null;
+                let touchStartX = 0;
+
+                if (
+                    galleryItems.length === 0 ||
+                    !lightbox ||
+                    !lightboxImage
+                ) {
+                    return;
+                }
+
+                function updateLightbox(index) {
+                    /*
+                     * Wrap around when reaching either end.
+                     */
+                    currentIndex =
+                        (index + galleryItems.length) % galleryItems.length;
+
+                    const selectedItem = galleryItems[currentIndex];
+                    const selectedImage = selectedItem.querySelector("img");
+
+                    const fullImage =
+                        selectedItem.dataset.fullImage ||
+                        selectedImage.src;
+
+                    const caption =
+                        selectedItem.dataset.caption ||
+                        selectedImage.alt ||
+                        "";
+
+                    lightboxImage.src = fullImage;
+                    lightboxImage.alt = selectedImage.alt || caption;
+
+
+                    counter.textContent =
+                        `${currentIndex + 1} / ${galleryItems.length}`;
+                }
+
+                function openLightbox(index) {
+                    previouslyFocusedElement = document.activeElement;
+
+                    updateLightbox(index);
+
+                    lightbox.hidden = false;
+                    document.body.classList.add("gallery-open");
+
+                    /*
+                     * A frame delay allows the opening transition to run.
+                     */
+                    window.requestAnimationFrame(function () {
+                        lightbox.classList.add("is-open");
+                        closeButton.focus();
+                    });
+                }
+
+                function closeLightbox() {
+                    lightbox.classList.remove("is-open");
+                    document.body.classList.remove("gallery-open");
+
+                    window.setTimeout(function () {
+                        lightbox.hidden = true;
+                        lightboxImage.src = "";
+
+                        if (previouslyFocusedElement) {
+                            previouslyFocusedElement.focus();
+                        }
+                    }, 200);
+                }
+
+                function showPreviousImage() {
+                    updateLightbox(currentIndex - 1);
+                }
+
+                function showNextImage() {
+                    updateLightbox(currentIndex + 1);
+                }
+
+                galleryItems.forEach(function (item, index) {
+                    item.addEventListener("click", function () {
+                        openLightbox(index);
+                    });
+                });
+
+                closeButton.addEventListener("click", closeLightbox);
+                previousButton.addEventListener("click", showPreviousImage);
+                nextButton.addEventListener("click", showNextImage);
+
+                /*
+                 * Close only when the dark background itself is selected.
+                 */
+                lightbox.addEventListener("click", function (event) {
+                    if (event.target === lightbox) {
+                        closeLightbox();
+                    }
+                });
+
+                /*
+                 * Keyboard controls:
+                 * Escape = close
+                 * Left arrow = previous
+                 * Right arrow = next
+                 */
+                document.addEventListener("keydown", function (event) {
+                    if (lightbox.hidden) {
+                        return;
+                    }
+
+                    if (event.key === "Escape") {
+                        closeLightbox();
+                    }
+
+                    if (event.key === "ArrowLeft") {
+                        showPreviousImage();
+                    }
+
+                    if (event.key === "ArrowRight") {
+                        showNextImage();
+                    }
+                });
+
+                /*
+                 * Basic swipe navigation for phones and tablets.
+                 */
+                lightbox.addEventListener(
+                    "touchstart",
+                    function (event) {
+                        touchStartX = event.changedTouches[0].screenX;
+                    },
+                    { passive: true }
+                );
+
+                lightbox.addEventListener(
+                    "touchend",
+                    function (event) {
+                        const touchEndX =
+                            event.changedTouches[0].screenX;
+
+                        const swipeDistance =
+                            touchEndX - touchStartX;
+
+                        if (Math.abs(swipeDistance) < 50) {
+                            return;
+                        }
+
+                        if (swipeDistance > 0) {
+                            showPreviousImage();
+                        } else {
+                            showNextImage();
+                        }
+                    },
+                    { passive: true }
+                );
+            });
+        </script>
+
+    </body>
+</html>
