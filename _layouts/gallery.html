@@ -490,7 +490,6 @@
 
                     {% assign gallery_images = site.static_files
                       | where_exp: "image", "image.path contains '/assets/images/gallery/'"
-                      | where_exp: "image", "image.extname == '.jpg' or image.extname == '.JPG'"
                       | sort: "name"
                     %}
 
