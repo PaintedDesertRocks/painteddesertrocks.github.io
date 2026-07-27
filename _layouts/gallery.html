@@ -481,21 +481,27 @@
                     {{ content }}
 
                     <!--
-                        Find every PNG inside:
+                        Find every JPG inside:
                         /assets/images/gallery/
 
-                        Images are sorted by filename:
-                        img01.png, img02.png, img03.png, etc.
-
-
+                        Liquid builds the complete image list first.
+                        JavaScript shuffles the rendered gallery on every page load.
                     -->
+
 
                     {% assign gallery_images = site.static_files
                       | where_exp: "image", "image.path contains '/assets/images/gallery/'"
-                      | where_exp: "image", "image.extname == '.jpg'"
+                      | where_exp: "image", "image.extname == '.jpg'
+                          or image.extname == '.JPG'
+                          or image.extname == '.jpeg'
+                          or image.extname == '.JPEG'
+                          or image.extname == '.png'
+                          or image.extname == '.PNG'
+                          or image.extname == '.webp'
+                          or image.extname == '.WEBP'"
                       | sort: "name"
-                    %}
-                    
+%}
+
                     <div
                         class="gallery-grid"
                         id="gallery-grid"
@@ -613,6 +619,36 @@
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 "use strict";
+
+                const galleryGrid = document.getElementById("gallery-grid");
+
+                /*
+                 * Shuffle the gallery on every page load using Fisher-Yates.
+                 * The same shuffled order is then used by the lightbox.
+                 */
+                if (galleryGrid) {
+                    const shuffledItems = Array.from(
+                        galleryGrid.querySelectorAll(".gallery-item")
+                    );
+
+                    for (let index = shuffledItems.length - 1; index > 0; index -= 1) {
+                        const randomIndex = Math.floor(
+                            Math.random() * (index + 1)
+                        );
+
+                        [shuffledItems[index], shuffledItems[randomIndex]] =
+                            [shuffledItems[randomIndex], shuffledItems[index]];
+                    }
+
+                    shuffledItems.forEach(function (item, index) {
+                        galleryGrid.appendChild(item);
+                        item.dataset.galleryIndex = String(index);
+                        item.setAttribute(
+                            "aria-label",
+                            `Open gallery image ${index + 1} of ${shuffledItems.length}`
+                        );
+                    });
+                }
 
                 const galleryItems = Array.from(
                     document.querySelectorAll(".gallery-item")
