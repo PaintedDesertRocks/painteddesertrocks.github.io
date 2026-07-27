@@ -488,19 +488,13 @@
                         JavaScript shuffles the rendered gallery on every page load.
                     -->
 
-
                     {% assign gallery_images = site.static_files
                       | where_exp: "image", "image.path contains '/assets/images/gallery/'"
                       | where_exp: "image", "image.extname == '.jpg'
-                          or image.extname == '.JPG'
-                          or image.extname == '.jpeg'
-                          or image.extname == '.JPEG'
-                          or image.extname == '.png'
-                          or image.extname == '.PNG'
-                          or image.extname == '.webp'
-                          or image.extname == '.WEBP'"
+                        or image.extname == '.JPG'"
                       | sort: "name"
-%}
+                    %}
+
 
                     <div
                         class="gallery-grid"
