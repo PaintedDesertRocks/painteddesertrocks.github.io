@@ -48,4 +48,3 @@ exclude:
   - .github
   - Gemfile
   - Gemfile.lock
-
